@@ -7,9 +7,8 @@ export default function Home() {
     <>
       <Box>
         <Typography>
-            IMDB Movie Browser
+            Library
         </Typography>
-        
       </Box>
     </>
   )

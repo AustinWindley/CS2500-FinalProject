@@ -1,6 +1,10 @@
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom"
 import Home from "./Home.tsx"
 import BookSearch from "./BookSearch.tsx"
+import BookPage from "./BookPage.tsx"
+import Signup from "./Signup.tsx"
+import Profile from "./Profile.tsx"
+import Login from "./Login.tsx"
 
 
 /**
@@ -14,7 +18,11 @@ function App() {
         children: [
             {index: true, element: <Navigate to={"home"} />},
             {path: "home", element: <Home />},
-            {path: "books", element: <BookSearch />}
+            {path: "books", element: <BookSearch />},
+            {path: "books/:ISBN", element: <BookPage />},
+            {path: "signup", element: <Signup />},
+            {path: "login", element: <Login />},
+            {path: "profile", element: <Profile />}
 
         ]
         

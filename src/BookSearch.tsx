@@ -6,6 +6,9 @@ import { TextField } from "@mui/material"
 import { Autocomplete } from "@mui/material"
 import { CircularProgress } from "@mui/material"
 import { alpha } from "@mui/material"
+import SideBar from "./statics/SideBar.tsx"
+import Header from "./statics/Header.tsx"
+
 export default function BookSearch() {
     const [allBooks, setAllBooks] = useState([])
     const [data, setData] = useState([])
@@ -70,6 +73,8 @@ export default function BookSearch() {
 
     return (
         <>
+            <Header pageName="Book Search"/>
+            <SideBar></SideBar>
             <Box 
                 component="form" 
                 onSubmit={(event) => {handleSubmit(event)}}
@@ -78,6 +83,7 @@ export default function BookSearch() {
                 flexDirection={"row"}
                 justifyContent={"center"}
                 noValidate
+                mt={8}
             >
                 <Autocomplete
                     //value={inputValue}

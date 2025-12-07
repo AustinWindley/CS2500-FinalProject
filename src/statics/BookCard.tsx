@@ -1,5 +1,6 @@
 import { Card, CardContent, CardMedia, CardActionArea, Typography, Box, Paper } from "@mui/material"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 interface Props {
     ISBN: string
     bookTitle: string
@@ -10,14 +11,18 @@ interface Props {
 
 export default function BookCard(props: Props) {
     const [paperElevation, setPaperElevation] = useState(5)
-
+    const nav = useNavigate()
 
 
     return (
-        <Box width={250}>
+        <Box width={250} zIndex={800}>
             <Paper elevation={paperElevation}>    
                 <Card>
-                    <CardActionArea onMouseOver={() => setPaperElevation(10)} onMouseOut={() => setPaperElevation(5)}>
+                    <CardActionArea 
+                        onMouseOver={() => setPaperElevation(10)} 
+                        onMouseOut={() => setPaperElevation(5)}
+                        onClick={() => nav("/books/" + props.ISBN)}
+                    >
                         <CardContent sx={{display: "flex", flexDirection:"row", justifyContent:"space-around"}}>
                             <CardMedia 
                                 style={{height: 150, width: 150, borderRadius: 4}}
@@ -32,9 +37,6 @@ export default function BookCard(props: Props) {
                                     {props.authorName}
                                 </Typography>
                             </Box>
-                            
-                            
-
                         </CardContent>
                     </CardActionArea>
                 </Card>

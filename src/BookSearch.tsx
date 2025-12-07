@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react"
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import BookCard from "./statics/BookCard.tsx"
 import { Masonry } from "@mui/lab"
 import { TextField } from "@mui/material"
 import { Autocomplete } from "@mui/material"
 import { CircularProgress } from "@mui/material"
+import { alpha } from "@mui/material"
 export default function BookSearch() {
+    const [allBooks, setAllBooks] = useState([])
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
-    const [inputValue, setInputValue] = useState("")
+    //const [inputValue, setInputValue] = useState("")
 
     useEffect(() => {
         fetch("api/books", {
@@ -16,7 +18,7 @@ export default function BookSearch() {
         }).then(
             res => res.json()
         ).then(
-            data => {setData(data), setLoading(false)}
+            data => {setAllBooks(data), setData(data), setLoading(false)}
         )
     }, [])
 
@@ -39,13 +41,13 @@ export default function BookSearch() {
             }
     }
 
-    async function handleSubmit(event: React.FormEvent<HTMLDivElement>) {
+    async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault()
-        setInputValue(event.target[0].value)
-        //console.log(event.target[0].value)
-        const formData = new FormData()
-        formData.append("title", inputValue)
+        setLoading(true)
+        const formData = new FormData(event.currentTarget)
+        
         console.log(formData)
+        
         try {
             const response = await sendFormData(formData)
             if (response.status === 401) {
@@ -55,9 +57,12 @@ export default function BookSearch() {
                 //     return false
                 // }
             }
+            
+            setLoading(false)
             return response.ok
         } catch (error) {
             console.error('Error during search:', error)
+            setLoading(false)
             return false
         }
     }
@@ -65,23 +70,46 @@ export default function BookSearch() {
 
     return (
         <>
-            <Autocomplete
-                value={inputValue}
-                id="book-search"
-                freeSolo
-                options={data.map((option) => option["bookTitle"])}
-                renderInput={(params) => <TextField {...params} component="form" onSubmit={(event) => {handleSubmit(event)}}>Search for a Book..."</TextField> }
-                // onSubmit={async (event) => handleSubmit(event)}
-            />
-
+            <Box 
+                component="form" 
+                onSubmit={(event) => {handleSubmit(event)}}
+                action={"/api/book_search"}
+                display={"flex"}
+                flexDirection={"row"}
+                justifyContent={"center"}
+                noValidate
+            >
+                <Autocomplete
+                    //value={inputValue}
+                    id="book-search"
+                    freeSolo
+                    options={allBooks.map((option) => option["bookTitle"])}
+                    renderInput={(params) => <TextField {...params} name="title">Search for a Book..."</TextField> }
+                    sx={{width: "80vw"}}
+                    // onSubmit={async (event) => handleSubmit(event)}
+                />
+                <Button type="submit">
+                    Search
+                </Button>
+            </Box>
             {loading === true ? (
-                <Box sx={{display: "flex"}}>
+                <Box 
+                    position={"fixed"}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}
+                    width={"100vw"}
+                    height={"100vh"}
+                    mt={-10} // move background up to cover search bar
+                    bgcolor={alpha("#232323", 0.1)}
+                >
                     <CircularProgress size={100}/>
                 </Box>
             ) : (
                 <Masonry columns={{xl: 4, md: 3, sm: 2, xs: 1}} spacing={2} sequential>
                     {data.map((book) => (
                         <BookCard
+                            key={book["ISBN"]}
                             ISBN={book["ISBN"]} 
                             bookTitle={book["bookTitle"]} 
                             authorName={book["authorName"]}

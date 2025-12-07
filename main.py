@@ -47,7 +47,7 @@ def books():
         )
     return all_books
 
-@app.route("/api/book_search", methods=["GET"])
+@app.route("/api/book_search", methods=["GET", "POST"])
 def book_search():
     """
     Get a searched book
@@ -59,7 +59,7 @@ def book_search():
 
     search_title = request.form.get("title")
     print(search_title)
-    book_list = cursor.execute("""SELECT * FROM Book WHERE bookTitle LIKE '%?%'""", (search_title,)).fetchall()
+    book_list = cursor.execute("""SELECT * FROM Book WHERE bookTitle LIKE ?""", ('%'+search_title+'%',)).fetchall()
     conn.close()
     all_books = []
     for book in book_list:

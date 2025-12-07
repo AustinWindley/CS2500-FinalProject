@@ -1,5 +1,6 @@
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom"
 import Home from "./Home.tsx"
+import BookSearch from "./BookSearch.tsx"
 
 
 /**
@@ -12,7 +13,8 @@ function App() {
         path: '/',
         children: [
             {index: true, element: <Navigate to={"home"} />},
-            {path: "home", element: <Home />}
+            {path: "home", element: <Home />},
+            {path: "books", element: <BookSearch />}
 
         ]
         

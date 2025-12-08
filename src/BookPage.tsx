@@ -7,6 +7,7 @@ export default function BookPage() {
     const location = useLocation()
     const ISBN = location["pathname"].split("/").slice(2)
     const [data, setData] = useState([])
+    const [ownership, setOwnership] = useState("")
     const nav = useNavigate()
 
     useEffect(() => {
@@ -19,11 +20,34 @@ export default function BookPage() {
         )
     }, [])
 
+    useEffect(() => {
+        fetch("api/ownership_check/"+ISBN, {
+            headers: {"Accept": "application/json"}
+        }).then(
+            res => res.json()
+        ).then(
+            data => {setOwnership(data), console.log(ownership)}
+        )
+    }, [])
+
     function handleCheckout(event: React.FormEvent<HTMLButtonElement>) {
         event.preventDefault()
 
         try {
             fetch("/api/checkout/"+data.ISBN, {
+                method: "POST",
+            }) 
+            nav("/profile")
+        } catch (error) {
+            return new Response(null, { status: 500, statusText: "Network error"})
+        }
+    }
+
+    function handleReturn(event: React.FormEvent<HTMLButtonElement>) {
+        event.preventDefault()
+
+        try {
+            fetch("/api/return/"+data.ISBN, {
                 method: "POST",
             }) 
             nav("/profile")
@@ -57,7 +81,9 @@ export default function BookPage() {
                     ) : (
                         <Button type="submit" onClick={handleCheckout}>Check Out Book</Button>
                     )}
-
+                    {ownership === "true" &&(
+                        <Button type="submit" onClick={handleReturn}>Return Book</Button>
+                    )}
                 </Grid>
             </Grid>
 

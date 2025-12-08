@@ -103,13 +103,17 @@ export default function Profile() {
                     flexDirection="column"
                     alignItems="center"
                     justifyContent="center"
-                    //minHeight="60vh"
                     gap={2}
                     mb={2}
                     size={6}
                     mt={8}
                 >
-                    <Typography variant="h4">Books Currently Checked Out:</Typography>
+                    {booksData.length !== 0 ? (
+                        <Typography variant="h4" textAlign={"center"}>Books Currently Checked Out:</Typography>
+                    ) : (
+                        <Typography variant="h4">No Books Currently Checked Out</Typography>
+                    )}
+                    
                     {booksData.map((book) => (
                         <BookCard
                             key={book["ISBN"]}

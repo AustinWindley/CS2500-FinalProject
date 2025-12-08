@@ -221,6 +221,19 @@ def checkout(ISBN):
     conn.close()
     return jsonify(), 200
 
+@app.route("/api/return/<string:ISBN>", methods=["POST"])
+def return_book(ISBN):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    user_id = session.get("user_id")
+    cursor.execute("""DELETE FROM UserBooks WHERE userID = ? AND ISBN = ?""", (user_id, ISBN,))
+    cursor.execute("""UPDATE Book SET dateCheckedOut = NULL WHERE ISBN = ?""", (ISBN,))
+    conn.commit()
+    conn.close()
+    return jsonify(), 200
+
 @app.route("/api/user_books", methods=["GET"])
 def user_books():
     """
@@ -251,6 +264,23 @@ def user_books():
             }
         )
     return all_books
+
+@app.route("/books/api/ownership_check/<string:ISBN>", methods=["GET"])
+def ownership_check(ISBN):
+    """
+    Check if book is currently checked out by user
+    :return: True if book is users
+    """
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    user_id = session.get("user_id")
+    book_check = cursor.execute("""SELECT * FROM UserBooks WHERE userID = ? AND ISBN = ?""", (user_id, ISBN)).fetchone()
+    if book_check:
+        return jsonify("true")
+    else:
+        return jsonify("false")
 
 if __name__ == "__main__" and app is not None:
     app.run('0.0.0.0', port=5001, debug=True)

@@ -1,8 +1,7 @@
 ### TODO ###
-User checks out books
 Home Page
-User Profile of Checked out Books
 Create a bunch of users
+Add search filters for more sql
 
 ### DONE ###
 Create Database
@@ -12,3 +11,6 @@ Design Book Cards
 Implement Book Search
 Single Book Page
 User login (Password hashing)
+User checks out books
+User Profile of Checked out Books
+User Can Return Books

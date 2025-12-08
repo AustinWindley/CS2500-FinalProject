@@ -1,4 +1,4 @@
-//import Header from "./statics/Header.tsx"
+import Header from "./statics/Header.tsx"
 import { Fragment } from "react/jsx-runtime"
 import { Grid, Typography, Container, Paper, Avatar, Box, TextField, Button } from "@mui/material"
 import { useNavigate } from "react-router-dom"
@@ -58,7 +58,7 @@ export default function Login() {
     const nav = useNavigate()
     return(
         <Fragment>
-            {/* <Header pageName="Login" /> */}
+            <Header pageName="Login" />
             {/* Had to put a grid container for header menu functionality */}
             <Grid container mt={8}>
                 <Container maxWidth="xs">

@@ -26,7 +26,6 @@ def create_user():
     :return: User(?)
     """
     data = request.form
-    print("Form data received:", data)
     username = data.get("username")
     password = data.get("password")
     email = data.get("email")
@@ -209,7 +208,49 @@ def book_info(ISBN):
     return book_return
 
 #checked out books
+@app.route("/api/checkout/<string:ISBN>", methods=["POST"])
+def checkout(ISBN):
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
 
+    user_id = session.get("user_id")
+    cursor.execute("""INSERT INTO UserBooks VALUES(?,?)""", (user_id, ISBN,))
+    cursor.execute("""UPDATE Book SET dateCheckedOut = CURRENT_TIMESTAMP WHERE ISBN = ?""", (ISBN,))
+    conn.commit()
+    conn.close()
+    return jsonify(), 200
+
+@app.route("/api/user_books", methods=["GET"])
+def user_books():
+    """
+    Get all books checked out by user
+    :return: List of books
+    """
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    user_id = session.get("user_id")
+    book_list = cursor.execute("""
+        SELECT ISBN, bookTitle, authorName, yearPublished, imageURL, dateCheckedOut
+        FROM UserBooks NATURAL JOIN Book
+        WHERE userID = ?""", (user_id,)).fetchall()
+    conn.close()
+    all_books = []
+    for book in book_list:
+        book = dict(book)
+        all_books.append(
+            {
+                "ISBN": book["ISBN"],
+                "bookTitle": book["bookTitle"],
+                "authorName": book["authorName"],
+                "yearPublished": book["yearPublished"],
+                "imageURL": book["imageURL"],
+                "dateCheckedOut": book["dateCheckedOut"]
+            }
+        )
+    return all_books
 
 if __name__ == "__main__" and app is not None:
     app.run('0.0.0.0', port=5001, debug=True)

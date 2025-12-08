@@ -15,7 +15,7 @@ export default function BookCard(props: Props) {
 
 
     return (
-        <Box width={250} zIndex={800}>
+        <Box sx={{minWidth: 250, maxWidth:{md: "45vw", lg: "30vw"}}} zIndex={800}>
             <Paper elevation={paperElevation}>    
                 <Card>
                     <CardActionArea 

@@ -5,6 +5,7 @@ import BookPage from "./BookPage.tsx"
 import Signup from "./Signup.tsx"
 import Profile from "./Profile.tsx"
 import Login from "./Login.tsx"
+import Logout from "./Logout.tsx"
 
 
 /**
@@ -22,6 +23,7 @@ function App() {
             {path: "books/:ISBN", element: <BookPage />},
             {path: "signup", element: <Signup />},
             {path: "login", element: <Login />},
+            {path: "logout", element: <Logout />},
             {path: "profile", element: <Profile />}
 
         ]

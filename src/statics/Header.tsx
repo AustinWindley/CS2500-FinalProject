@@ -70,10 +70,10 @@ export default function Header(props: Props) {
                     onClick={() => {nav("/home")}}
                 />
                 <Tab
-                    label={<Typography variant="h5">Events</Typography>}
-                    value={"/events"}
+                    label={<Typography variant="h5">Book Search</Typography>}
+                    value={"/books"}
                     sx={{textTransform: "none"}}
-                    onClick={() => {nav("/events")}}
+                    onClick={() => {nav("/books")}}
                 />
             </Tabs>
         </Grid>

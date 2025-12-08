@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-import { Box, Button } from "@mui/material"
+import { Box, Button, Grid, Typography } from "@mui/material"
 import BookCard from "./statics/BookCard.tsx"
 import { Masonry } from "@mui/lab"
 import { TextField } from "@mui/material"
@@ -13,15 +13,16 @@ export default function BookSearch() {
     const [allBooks, setAllBooks] = useState([])
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
-    //const [inputValue, setInputValue] = useState("")
+    const [noSearches, setNoSearches] = useState(true)
 
+    // Load list of all books for autocomplete
     useEffect(() => {
         fetch("api/books", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
         ).then(
-            data => {setAllBooks(data), setData(data), setLoading(false)}
+            data => {setAllBooks(data), setLoading(false)}
         )
     }, [])
 
@@ -53,15 +54,9 @@ export default function BookSearch() {
         
         try {
             const response = await sendFormData(formData)
-            if (response.status === 401) {
-                const errorData = await response.json()
-                // if (errorData.error === "Not logged in") {
-                //     alert("Post creation failed: Not logged in")
-                //     return false
-                // }
-            }
             
             setLoading(false)
+            setNoSearches(false)
             return response.ok
         } catch (error) {
             console.error('Error during search:', error)
@@ -74,59 +69,88 @@ export default function BookSearch() {
     return (
         <>
             <Header pageName="Book Search"/>
-            <SideBar></SideBar>
-            <Box 
-                component="form" 
-                onSubmit={(event) => {handleSubmit(event)}}
-                action={"/api/book_search"}
-                display={"flex"}
-                flexDirection={"row"}
-                justifyContent={"center"}
-                noValidate
-                mt={8}
-            >
-                <Autocomplete
-                    //value={inputValue}
-                    id="book-search"
-                    freeSolo
-                    options={allBooks.map((option) => option["bookTitle"])}
-                    renderInput={(params) => <TextField {...params} name="title">Search for a Book..."</TextField> }
-                    sx={{width: "80vw"}}
-                    // onSubmit={async (event) => handleSubmit(event)}
-                />
-                <Button type="submit">
-                    Search
-                </Button>
-            </Box>
-            {loading === true ? (
-                <Box 
-                    position={"fixed"}
-                    display={"flex"}
-                    justifyContent={"center"}
-                    alignItems={"center"}
-                    width={"100vw"}
-                    height={"100vh"}
-                    mt={-10} // move background up to cover search bar
-                    bgcolor={alpha("#232323", 0.1)}
-                >
-                    <CircularProgress size={100}/>
+            <Grid container display={"flex"} mt={8}>
+                <Box zIndex={1900} mt={8}>
+                    <SideBar currentPage="/books"/>
                 </Box>
-            ) : (
-                <Masonry columns={{xl: 4, md: 3, sm: 2, xs: 1}} spacing={2} sequential>
-                    {data.map((book) => (
-                        <BookCard
-                            key={book["ISBN"]}
-                            ISBN={book["ISBN"]} 
-                            bookTitle={book["bookTitle"]} 
-                            authorName={book["authorName"]}
-                            yearPublished={book["yearPublished"]}
-                            imageURL={book["imageURL"]}
-                        />
-                    ))}
-                            
-                </Masonry>
+                <Grid 
+                    display={"flex"}
+                    mt={8}
+                    justifyContent={"center"}
+                    size={12}
+                >
+                    <Box>
+                        <Box display={"flex"} flexDirection={"column"} textAlign={"center"}>
+                            {noSearches &&(
+                                <Typography variant="h2">Type Below to Search for a Book</Typography>
+                            )}
+                            <Box 
+                                component="form" 
+                                onSubmit={(event) => {handleSubmit(event)}}
+                                action={"/api/book_search"}
+                                display={"flex"}
+                                flexDirection={"row"}
+                                justifyContent={"center"}
+                                noValidate
+                                pt={4}
+                                mb={4}
+                            >
+                                <Autocomplete
+                                    id="book-search"
+                                    freeSolo
+                                    options={allBooks.map((option) => option["bookTitle"])}
+                                    renderInput={(params) => <TextField {...params} name="title">Search for a Book...</TextField> }
+                                    sx={{width: "80vw"}}
+                                />
+                                <Button type="submit">
+                                    Search
+                                </Button>
+                            </Box>
+                        </Box>
+                        {loading === true ? (
+                            <Box 
+                                //position={"fixed"}
+                                display={"flex"}
+                                justifyContent={"center"}
+                                alignItems={"center"}
+                                width={"100vw"}
+                                height={"100vh"}
+                                mt={0} // move background up to cover search bar
+                                //bgcolor={alpha("#232323", 0.1)}
+                            >
+                                <CircularProgress size={100} disableShrink/>
+                            </Box>
+                        ) : (
+                            <Box 
+                                display={"flex"}
+                                justifyContent={"center"}
+                                pl={6}
+                                pr={6}
+                            >
+                                <Masonry 
+                                    columns={{xl: 4, md: 3, sm: 2, xs: 1}} 
+                                    spacing={2} 
+                                    sequential                             
+                                >
+                                    {data.map((book) => (
+                                        <BookCard
+                                            key={book["ISBN"]}
+                                            ISBN={book["ISBN"]} 
+                                            bookTitle={book["bookTitle"]} 
+                                            authorName={book["authorName"]}
+                                            yearPublished={book["yearPublished"]}
+                                            imageURL={book["imageURL"]}
+                                        />
+                                    ))}        
+                                </Masonry>
+                            </Box>
+                        )}
+                    </Box>
+                </Grid>
 
-            )}
+            </Grid>
+            
+            
             
         </>
         

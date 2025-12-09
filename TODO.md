@@ -1,5 +1,4 @@
 ### TODO ###
-Home Page
 Create a bunch of users
 Add search filters for more sql
 
@@ -14,3 +13,4 @@ User login (Password hashing)
 User checks out books
 User Profile of Checked out Books
 User Can Return Books
+Home Page

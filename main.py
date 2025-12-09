@@ -266,6 +266,51 @@ def book_info(ISBN):
     )
     return book_return
 
+@app.route("/books/api/author/<string:ISBN>", methods=["GET"])
+def author_name(ISBN):
+    """
+    Get name of book author
+    :return: Author info for one author via authorName
+    """
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    
+    author = cursor.execute("""SELECT authorName FROM Book WHERE ISBN = ?""", (ISBN,)).fetchone()
+    conn.close()
+    author_return = []
+    author = dict(author)
+    author_return.append(
+        {
+            "authorName": author["authorName"],
+        }
+    )
+    return jsonify(author_return), 200
+
+@app.route("/api/author/<string:authorName>", methods=["GET"])
+def author_info(authorName):
+    """
+    Get all info about a specific author
+    :return: Author info for one author via authorName
+    """
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    authorName = authorName.replace("_", " ")
+    
+    author = cursor.execute("""SELECT * FROM Author WHERE authorName = ?""", (authorName,)).fetchone()
+    conn.close()
+    author_return = []
+    author = dict(author)
+    author_return.append(
+        {
+            "authorName": author["authorName"],
+            "authorCountry": author["authorCountry"]
+        }
+    )
+    return author_return
+
 #check out a book
 @app.route("/api/checkout/<string:ISBN>", methods=["POST"])
 def checkout(ISBN):

@@ -6,7 +6,8 @@ import Header from "./statics/Header.tsx"
 export default function BookPage() {
     const location = useLocation()
     const ISBN = location["pathname"].split("/").slice(2)
-    const [data, setData] = useState([])
+    const [bookData, setBookData] = useState([])
+    const [authorName, setAuthorName] = useState("")
     const [ownership, setOwnership] = useState("")
     const nav = useNavigate()
 
@@ -16,7 +17,17 @@ export default function BookPage() {
         }).then(
             res => res.json()
         ).then(
-            data => {setData(data[0]), console.log(data[0])}
+            data => {setBookData(data[0])}
+        )
+    }, [])
+
+    useEffect(() => {
+        fetch("api/author/"+ISBN, {
+            headers: {"Accept": "application/json"}
+        }).then(
+            res => res.text()
+        ).then(
+            data => {setAuthorName(data[0]["authorName"]), console.log(data)}
         )
     }, [])
 
@@ -26,17 +37,22 @@ export default function BookPage() {
         }).then(
             res => res.json()
         ).then(
-            data => {setOwnership(data), console.log(ownership)}
+            data => {setOwnership(data)}
         )
     }, [])
 
-    const formattedTimestamp = new Date(data.dateCheckedOut)
+    const formattedTimestamp = new Date(bookData.dateCheckedOut)
+    //console.log(bookData)
+    //console.log(bookData.authorName)
+    //console.log(bookData.authorName)
+    // setAuthorName(bookData.authorName)
+    
 
     function handleCheckout(event: React.FormEvent<HTMLButtonElement>) {
         event.preventDefault()
 
         try {
-            fetch("/api/checkout/"+data.ISBN, {
+            fetch("/api/checkout/"+bookData.ISBN, {
                 method: "POST",
             }) 
             nav("/profile")
@@ -49,7 +65,7 @@ export default function BookPage() {
         event.preventDefault()
 
         try {
-            fetch("/api/return/"+data.ISBN, {
+            fetch("/api/return/"+bookData.ISBN, {
                 method: "POST",
             }) 
             nav("/profile")
@@ -60,42 +76,43 @@ export default function BookPage() {
 
     return (
         <>
-            <Header pageName={data.bookTitle} />
-            <Grid container spacing={4} mt={8}>
-                <Grid 
-                    component={"img"} 
-                    src={data.imageURL}
-                    size={4}
-                    border={"solid 2px"}
-                    borderRadius={1}
-                />
-                <Grid 
-                    size={8}
-                    display={"flex"}
-                    flexDirection={"column"}
-                >
-                    <Typography variant="h3">{data.bookTitle}</Typography>
-                    <Typography variant="h4">Written by {data.authorName}</Typography>
-                    <Typography variant="h4">ISBN: {data.ISBN}</Typography>
+            <Header pageName={bookData.bookTitle} />
+            <Paper elevation={5}>
+                <Grid container spacing={4} mt={8} padding={5}>
+                    <Grid 
+                        component={"img"} 
+                        src={bookData.imageURL}
+                        size={4}
+                        border={"solid 2px"}
+                        borderRadius={1}
+                    />
+                    <Grid 
+                        size={8}
+                        display={"flex"}
+                        flexDirection={"column"}
+                    >
+                        <Typography variant="h3">{bookData.bookTitle}</Typography>
+                        <Box display={"flex"}>
+                            <Typography variant="h4">Written by {bookData.authorName}</Typography>
+                        </Box>
+                        
+                        <Typography variant="h4">ISBN: {bookData.ISBN}</Typography>
+                        <Typography variant="h5">Released: {bookData.yearPublished}</Typography>
 
-                    {data.dateCheckedOut ? (
-                        <Typography variant="h6">{"Book checked out on: " + 
-                            formattedTimestamp.toLocaleDateString() + " " + 
-                            formattedTimestamp.toLocaleTimeString()}
-                        </Typography>
-                    ) : (
-                        <Button type="submit" onClick={handleCheckout}>Check Out Book</Button>
-                    )}
-                    {ownership === "true" &&(
-                        <Button type="submit" onClick={handleReturn}>Return Book</Button>
-                    )}
+                        {bookData.dateCheckedOut ? (
+                            <Typography variant="h6">{"Book checked out on: " + 
+                                formattedTimestamp.toLocaleDateString() + " " + 
+                                formattedTimestamp.toLocaleTimeString()}
+                            </Typography>
+                        ) : (
+                            <Button type="submit" onClick={handleCheckout}>Check Out Book</Button>
+                        )}
+                        {ownership === "true" &&(
+                            <Button type="submit" onClick={handleReturn}>Return Book</Button>
+                        )}
+                    </Grid>
                 </Grid>
-            </Grid>
-
-            
-            
-            
-
+            </Paper>
         </>
     )
 }

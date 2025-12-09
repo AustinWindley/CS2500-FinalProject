@@ -5,7 +5,7 @@ import { Masonry } from "@mui/lab"
 import { TextField } from "@mui/material"
 import { Autocomplete } from "@mui/material"
 import { CircularProgress } from "@mui/material"
-import { alpha } from "@mui/material"
+import { Paper } from "@mui/material"
 import SideBar from "./statics/SideBar.tsx"
 import Header from "./statics/Header.tsx"
 
@@ -80,33 +80,42 @@ export default function BookSearch() {
                     size={12}
                 >
                     <Box>
-                        <Box display={"flex"} flexDirection={"column"} textAlign={"center"}>
-                            {noSearches &&(
-                                <Typography variant="h2" mt={4}>Type Below to Search for a Book</Typography>
-                            )}
+                        <Paper elevation={5}>
                             <Box 
-                                component="form" 
-                                onSubmit={(event) => {handleSubmit(event)}}
-                                action={"/api/book_search"}
-                                display={"flex"}
-                                flexDirection={"row"}
-                                justifyContent={"center"}
-                                noValidate
-                                pt={4}
-                                mb={4}
+                                display={"flex"} 
+                                flexDirection={"column"} 
+                                textAlign={"center"} 
+                                bgcolor={"#FFF"}
+                                pb={3} pl={3} pr={3} mt={2} mb={3}
+                                borderRadius={3}
                             >
-                                <Autocomplete
-                                    id="book-search"
-                                    freeSolo
-                                    options={allBooks.map((option) => option["bookTitle"])}
-                                    renderInput={(params) => <TextField {...params} name="title">Search for a Book...</TextField> }
-                                    sx={{width: "80vw"}}
-                                />
-                                <Button type="submit">
-                                    Search
-                                </Button>
+                                {noSearches &&(
+                                    <Typography variant="h2" mt={4}>Type Below to Search for a Book</Typography>
+                                )}
+                                <Box 
+                                    component="form" 
+                                    onSubmit={(event) => {handleSubmit(event)}}
+                                    action={"/api/book_search"}
+                                    display={"flex"}
+                                    flexDirection={"row"}
+                                    justifyContent={"center"}
+                                    noValidate
+                                    pt={4}
+                                    mb={4}
+                                >
+                                    <Autocomplete
+                                        id="book-search"
+                                        freeSolo
+                                        options={allBooks.map((option) => option["bookTitle"])}
+                                        renderInput={(params) => <TextField {...params} name="title">Search for a Book...</TextField> }
+                                        sx={{width: "80vw"}}
+                                    />
+                                    <Button type="submit">
+                                        Search
+                                    </Button>
+                                </Box>
                             </Box>
-                        </Box>
+                        </Paper>
                         {loading === true ? (
                             <Box 
                                 display={"flex"}

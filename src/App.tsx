@@ -3,6 +3,7 @@ import Home from "./Home.tsx"
 import BookSearch from "./BookSearch.tsx"
 import AuthorSearch from "./AuthorSearch.tsx"
 import BookPage from "./BookPage.tsx"
+import AuthorPage from "./AuthorPage.tsx"
 import Signup from "./Signup.tsx"
 import Profile from "./Profile.tsx"
 import Login from "./Login.tsx"
@@ -23,6 +24,7 @@ function App() {
             {path: "books", element: <BookSearch />},
             {path: "author_books", element: <AuthorSearch />},
             {path: "books/:ISBN", element: <BookPage />},
+            {path: "author/:authorName", element: <AuthorPage />},
             {path: "signup", element: <Signup />},
             {path: "login", element: <Login />},
             {path: "logout", element: <Logout />},

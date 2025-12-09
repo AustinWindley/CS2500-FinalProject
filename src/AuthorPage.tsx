@@ -1,4 +1,5 @@
 import Header from "./statics/Header.tsx"
+import { Fragment } from "react/jsx-runtime"
 import { Avatar } from '@mui/material'
 //import EventCard from "./statics/EventCard.tsx"
 import { deepPurple } from '@mui/material/colors'
@@ -20,35 +21,26 @@ interface UserData {
  * Creates a profile page for logged in user via UserData interface
  * @returns a profile page with a users events and information
  */
-export default function Profile() {
-    const [userData, setUserData] = useState<UserData | null>(null)
+export default function AuthorPage() {
+    const [data, setData] = useState([])
+    const authorName = location["pathname"].split("/").slice(2)
     const [booksData, setBooksData] = useState([])
     const nav = useNavigate()
 
-    // Fetch user account data 
+    // Fetch author info
     useEffect(() => {
-        fetch("/api/account", {
-            method: "GET",
-            headers: {"Accept": "application/json"},
-            credentials: "include"
-        })
-        .then((res) => {
-        console.log("Status code:", res.status)
-        return res.json()
-        })
-        .then((data) => {
-        console.log("Data from /api/account:", data)
-        // Set fetched data to state
-        setUserData(data)
-        })
-        .catch((err) => {
-        console.error("Fetch error:", err)
-        })
+        fetch("api/author/"+authorName, {
+            headers: {"Accept": "application/json"}
+        }).then(
+            res => res.json()
+        ).then(
+            data => {setData(data[0]), console.log(data[0])}
+        )
     }, [])
 
-    // Fetch user's checked out books
+    // Fetch author's books
     useEffect(() => {
-        fetch("api/user_books", {
+        fetch("api/author_books", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -59,7 +51,7 @@ export default function Profile() {
 
     return(
         <>
-            <Header pageName="Profile"/>
+            <Header pageName={authorName[0]}/>
             <Grid
                 display={"flex"}
                 container
@@ -78,25 +70,10 @@ export default function Profile() {
                     alignItems={"center"}
                     size={6}
                 >
-                    <Avatar
-                        sx={{ 
-                            width: 120, 
-                            height: 120, 
-                            bgcolor: deepPurple[500], 
-                            fontSize: 60, 
-                            marginTop: 5,
-                        }}
-                    >
-                        {userData?.username ? userData.username[0].toUpperCase() : "?"}
-                    </Avatar>
-
-                    <Typography variant="h3">{userData?.username ?? "Loading..."}</Typography>
-                    <Typography variant="h6">Email: {userData?.email ?? "Loading..."}</Typography>
-                    <Typography variant="h6">Phone Number: {userData?.phone ?? "Loading..."}</Typography>
-                    <Typography variant="h6">Address: {userData?.address ?? "Loading..."}</Typography>
+                    <Typography variant="h3">{data.authorName}</Typography>
+                    <Typography variant="h6">Email: {data.authorCountry}</Typography>
                 </Grid>
                 
-
                 <Grid
                     display="flex"
                     flexDirection="column"
@@ -107,12 +84,7 @@ export default function Profile() {
                     size={6}
                     mt={8}
                 >
-                    {booksData.length !== 0 ? (
-                        <Typography variant="h4" textAlign={"center"}>Books Currently Checked Out:</Typography>
-                    ) : (
-                        <Typography variant="h4">No Books Currently Checked Out</Typography>
-                    )}
-                    
+                    <Typography variant="h4" textAlign={"center"}>Books Written:</Typography>
                     {booksData.map((book) => (
                         <BookCard
                             key={book["ISBN"]}

@@ -142,7 +142,7 @@ export default function Header(props: Props) {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={() => nav("/home")}>
+                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         {props.pageName}
                     </Typography>
                     <Button color="inherit" onClick={handleLogin}>Account</Button>

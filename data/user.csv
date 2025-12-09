@@ -1,0 +1,2 @@
+userID,username,password,email,phoneNum,address
+1,awindley,scrypt:32768:8:1$Kl6vlNXVaLimMUEI$c29ee094e132d25fa0b00dad117f4d1015e6c91adb0902e172427a7522fecff4e71b8b385ae0ec68b263545764053a23f35321ad5a0079450d055f3ecbb96eb4,awindley@uvm.edu,7579683125,"410 North St, Burlington, VT"

@@ -1,6 +1,7 @@
 import {createBrowserRouter, Navigate, RouterProvider} from "react-router-dom"
 import Home from "./Home.tsx"
 import BookSearch from "./BookSearch.tsx"
+import AuthorSearch from "./AuthorSearch.tsx"
 import BookPage from "./BookPage.tsx"
 import Signup from "./Signup.tsx"
 import Profile from "./Profile.tsx"
@@ -20,14 +21,13 @@ function App() {
             {index: true, element: <Navigate to={"home"} />},
             {path: "home", element: <Home />},
             {path: "books", element: <BookSearch />},
+            {path: "author_books", element: <AuthorSearch />},
             {path: "books/:ISBN", element: <BookPage />},
             {path: "signup", element: <Signup />},
             {path: "login", element: <Login />},
             {path: "logout", element: <Logout />},
             {path: "profile", element: <Profile />}
-
         ]
-        
     }])
     return (
         <RouterProvider router={router} />

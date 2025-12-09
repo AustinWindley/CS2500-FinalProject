@@ -9,26 +9,26 @@ import { alpha } from "@mui/material"
 import SideBar from "./statics/SideBar.tsx"
 import Header from "./statics/Header.tsx"
 
-export default function BookSearch() {
-    const [allBooks, setAllBooks] = useState([])
+export default function AuthorSearch() {
+    const [allAuthors, setAllAuthors] = useState([])
     const [data, setData] = useState([])
     const [loading, setLoading] = useState(true)
     const [noSearches, setNoSearches] = useState(true)
 
     // Load list of all books for autocomplete
     useEffect(() => {
-        fetch("api/books", {
+        fetch("api/authors", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
         ).then(
-            data => {setAllBooks(data), setLoading(false)}
+            data => {setAllAuthors(data), setLoading(false)}
         )
     }, [])
 
     async function sendFormData(formData: FormData) {
         try {
-            const response = await fetch("/api/book_search", {
+            const response = await fetch("/api/author_search", {
                 method: "POST",
                 body: formData
             })
@@ -71,7 +71,7 @@ export default function BookSearch() {
             <Header pageName="Book Search"/>
             <Grid container display={"flex"} mt={8}>
                 <Box zIndex={1900}>
-                    <SideBar currentPage="/books"/>
+                    <SideBar currentPage="/author_books"/>
                 </Box>
                 <Grid 
                     display={"flex"}
@@ -87,7 +87,7 @@ export default function BookSearch() {
                             <Box 
                                 component="form" 
                                 onSubmit={(event) => {handleSubmit(event)}}
-                                action={"/api/book_search"}
+                                action={"/api/author_search"}
                                 display={"flex"}
                                 flexDirection={"row"}
                                 justifyContent={"center"}
@@ -98,8 +98,8 @@ export default function BookSearch() {
                                 <Autocomplete
                                     id="book-search"
                                     freeSolo
-                                    options={allBooks.map((option) => option["bookTitle"])}
-                                    renderInput={(params) => <TextField {...params} name="title">Search for a Book...</TextField> }
+                                    options={allAuthors.map((option) => option["authorName"])}
+                                    renderInput={(params) => <TextField {...params} name="authorName">Search for a Book...</TextField> }
                                     sx={{width: "80vw"}}
                                 />
                                 <Button type="submit">

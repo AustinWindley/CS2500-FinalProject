@@ -6,6 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # from werkzeug.utils import secure_filename
 from server.app import get_db_connection
 from server.app import create_app
+from server.app import init_db
 
 class Config:
     """
@@ -17,6 +18,12 @@ class Config:
 app = create_app(Config)
 
 ### APP ROUTES ###
+
+#create database
+@app.route("/api/create_database", methods=["POST"])
+def create_database():
+    init_db()
+    return jsonify(), 200
 
 #user account management
 @app.route("/api/signup", methods=["POST"])
@@ -151,6 +158,27 @@ def books():
         )
     return all_books
 
+@app.route("/api/authors", methods=["GET"])
+def authors():
+    """
+    Get all authors
+    :return: List of authors
+    """
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    author_list = cursor.execute("SELECT * FROM Author").fetchall()
+    conn.close()
+    all_authors = []
+    for author in author_list:
+        author = dict(author)
+        all_authors.append(
+            {
+                "authorName": author["authorName"]
+            }
+        )
+    return all_authors
+
 @app.route("/api/book_search", methods=["GET", "POST"])
 def book_search():
     """
@@ -162,11 +190,43 @@ def book_search():
     cursor = conn.cursor()
 
     search_title = request.form.get("title")
-    print(search_title)
+
     book_list = cursor.execute("""SELECT * FROM Book WHERE bookTitle LIKE ?""", ('%'+search_title+'%',)).fetchall()
     conn.close()
     all_books = []
     for book in book_list:
+        book = dict(book)
+        all_books.append(
+            {
+                "ISBN": book["ISBN"],
+                "bookTitle": book["bookTitle"],
+                "authorName": book["authorName"],
+                "yearPublished": book["yearPublished"],
+                "imageURL": book["imageURL"],
+                "dateCheckedOut": book["dateCheckedOut"]
+            }
+        )
+    return all_books
+
+@app.route("/api/author_search", methods=["GET", "POST"])
+def author_search():
+    """
+    Get a list of books by author
+    
+    :return: a list of books
+    """
+    conn = get_db_connection()
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    search_author = request.form.get("authorName")
+
+    books_list = cursor.execute("""
+        SELECT * FROM AuthorBooks NATURAL JOIN Book 
+        WHERE authorName LIKE ?""", ('%'+search_author+'%',)).fetchall()
+    conn.close()
+    all_books = []
+    for book in books_list:
         book = dict(book)
         all_books.append(
             {
@@ -190,7 +250,6 @@ def book_info(ISBN):
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    #print(ISBN)
     book = cursor.execute("""SELECT * FROM Book WHERE ISBN = ?""", (ISBN,)).fetchone()
     conn.close()
     book_return = []
@@ -207,7 +266,7 @@ def book_info(ISBN):
     )
     return book_return
 
-#checked out books
+#check out a book
 @app.route("/api/checkout/<string:ISBN>", methods=["POST"])
 def checkout(ISBN):
     conn = get_db_connection()
@@ -221,6 +280,7 @@ def checkout(ISBN):
     conn.close()
     return jsonify(), 200
 
+#return a book
 @app.route("/api/return/<string:ISBN>", methods=["POST"])
 def return_book(ISBN):
     conn = get_db_connection()

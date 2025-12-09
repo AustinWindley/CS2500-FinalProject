@@ -62,16 +62,16 @@ export default function Header(props: Props) {
             bgcolor={'#6b5bb4ff'}
             zIndex={1950}
         >
-            <Tabs value={location.pathname} centered>
+            <Tabs centered>
                 <Tab
                     label={<Typography variant="h5">Home</Typography>}
-                    value={"/home"}
+                    //value={"/home"}
                     sx={{textTransform: "none"}}
                     onClick={() => {nav("/home")}}
                 />
                 <Tab
                     label={<Typography variant="h5">Book Search</Typography>}
-                    value={"/books"}
+                    //value={"/books"}
                     sx={{textTransform: "none"}}
                     onClick={() => {nav("/books")}}
                 />
@@ -89,19 +89,18 @@ export default function Header(props: Props) {
             bgcolor={"#6b5bb4ff"}
             zIndex={1950}
         >
-            <Tabs value={props.pageName} centered>
-
+            <Tabs centered>
                 {auth === true ?(
                 <>
                     <Tab
                         label={<Typography variant="h5">Profile</Typography>}
-                        value={"/profile"}
+                        //value={"/profile"}
                         sx={{textTransform: "none"}}
                         onClick={() => {nav("/profile")}}
                     />
                     <Tab
                         label={<Typography variant="h5">Logout</Typography>}
-                        value={"/logout"}
+                        //value={"/logout"}
                         sx={{textTransform: "none"}}
                         onClick={() => {nav("/logout")}}
                     />
@@ -110,13 +109,13 @@ export default function Header(props: Props) {
                 <>
                     <Tab
                         label={<Typography variant="h5">Login</Typography>}
-                        value={"/login"}
+                        //value={"/login"}
                         sx={{textTransform: "none"}}
                         onClick={() => {nav("/login")}}
                     />
                     <Tab
                         label={<Typography variant="h5">Signup</Typography>}
-                        value={"/signup"}
+                        //value={"/signup"}
                         sx={{textTransform: "none"}}
                         onClick={() => {nav("/signup")}}
                     />

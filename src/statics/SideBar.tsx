@@ -1,8 +1,9 @@
 import { Box, Typography, Tabs, Tab, Slide, Grid } from "@mui/material"
-import Divider from '@mui/material/Divider';
-import IconButton from '@mui/material/IconButton';
+import Divider from '@mui/material/Divider'
+import IconButton from '@mui/material/IconButton'
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
+import { FilterList } from "@mui/icons-material"
 import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
@@ -78,64 +79,31 @@ export default function SideBar(props: Props) {
             position={"fixed"}
             zIndex={3000}
         >
-            <Tabs value={page} centered orientation="vertical">
-                {auth === true ? (
-                <>
-                    <Tab
-                        label={<Typography variant="h5">Create Event</Typography>}
-                        value={"/create_event"}
-                        sx={{textTransform: "none"}}
-                        onClick={() => {setPage("/create_event"); nav("/create_event")}}
-                    />
-                    <Divider />
-                </>
-                ) : (
-                <>
-                    <Tab
-                        label={<Typography variant="h5">Create Event</Typography>}
-                        value={"/create_event"}
-                        sx={{textTransform: "none"}}
-                        onClick={() => {setPage("/login"); nav("/login")}}
-                    />  
-                    <Divider />
-                </>
-                )} 
-
-                {props.currentPage === "/events" ? (
-                <>
-                    <Tab
-                        label={<Typography variant="h5">Display As Map</Typography>}
-                        value={"/events/map"}
-                        sx={{textTransform: "none"}}
-                        onClick={() => {setPage("/events/map"); nav("/events/map")}}
-                    />
-                    <Divider />
-                </>
-                ) : props.currentPage === "/events/map" ? (
-                <>
-                    <Tab
-                        label={<Typography variant="h5">Display As List</Typography>}
-                        value={"/events"}
-                        sx={{textTransform: "none"}}
-                        onClick={() => {setPage("/events"); nav("/events")}}
-                    />
-                    <Divider />
-                </>
-                ) : props.currentPage === "/event" &&(
-                <>
-                    <Tab
-                        label={<Typography variant="h5">Back to Events</Typography>}
-                        value={"/events"}
-                        sx={{textTransform: "none"}}
-                        onClick={() => {setPage("/events"); nav("/events")}}
-                    />
-                    <Divider />
-                </>
+            <Tabs centered orientation="vertical">
+                {props.currentPage === "/books" ? (
+                    <>
+                        <Tab
+                            label={<Typography variant="h5">Search By Author</Typography>}
+                            //value={"/author_books"}
+                            sx={{textTransform: "none"}}
+                            onClick={() => {setPage("/author_books"); nav("/author_books")}}
+                        />
+                        <Divider />
+                    </>
+                ) : props.currentPage === "/author_books" &&(
+                    <>
+                        <Tab
+                            label={<Typography variant="h5">Search By Title</Typography>}
+                            //value={"/books"}
+                            sx={{textTransform: "none"}}
+                            onClick={() => {setPage("/books"); nav("/books")}}
+                        />
+                        <Divider />
+                    </>
                 )}
             </Tabs>
         </Box>
     )
-
 
     return (
         <Box display={"flex"} position={"fixed"}>
@@ -158,7 +126,7 @@ export default function SideBar(props: Props) {
             </Slide>
             <Slide in={!openArrowEnter} timeout={300} direction="right">
                 <Box zIndex={0} mt={50} ml={1} position={"fixed"} display={openVisibility}>
-                    <IconButton onClick={() => {handleOpenVisibility(); setTimeout(handleBarOpen);}} sx={{bgcolor: "#6b5bb4ff"}}>
+                    <IconButton onClick={() => {handleOpenVisibility(); handleBarOpen();}} sx={{bgcolor: "#6b5bb4ff"}}>
                         <ArrowForwardIosIcon />
                     </IconButton>
                 </Box>

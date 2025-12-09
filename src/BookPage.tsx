@@ -30,6 +30,8 @@ export default function BookPage() {
         )
     }, [])
 
+    const formattedTimestamp = new Date(data.dateCheckedOut)
+
     function handleCheckout(event: React.FormEvent<HTMLButtonElement>) {
         event.preventDefault()
 
@@ -77,7 +79,10 @@ export default function BookPage() {
                     <Typography variant="h4">ISBN: {data.ISBN}</Typography>
 
                     {data.dateCheckedOut ? (
-                        <Typography variant="h6">{"Book checked out on: " + data.dateCheckedOut}</Typography>
+                        <Typography variant="h6">{"Book checked out on: " + 
+                            formattedTimestamp.toLocaleDateString() + " " + 
+                            formattedTimestamp.toLocaleTimeString()}
+                        </Typography>
                     ) : (
                         <Button type="submit" onClick={handleCheckout}>Check Out Book</Button>
                     )}

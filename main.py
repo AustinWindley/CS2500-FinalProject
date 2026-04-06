@@ -388,4 +388,4 @@ def ownership_check(ISBN):
         return jsonify("false")
 
 if __name__ == "__main__" and app is not None:
-    app.run('0.0.0.0', port=5001, debug=True)
+    app.run('0.0.0.0', port=5002)

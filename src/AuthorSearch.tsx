@@ -17,7 +17,7 @@ export default function AuthorSearch() {
 
     // Load list of all books for autocomplete
     useEffect(() => {
-        fetch("api/authors", {
+        fetch("Libary/api/authors", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()

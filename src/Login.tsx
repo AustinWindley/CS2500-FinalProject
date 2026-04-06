@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
  */
 async function sendFormData(formData: FormData) {
     try {
-        const response = await fetch("/api/login", {
+        const response = await fetch("Libary/api/login", {
             method: "POST",
             body: formData
         })
@@ -81,7 +81,7 @@ export default function Login() {
                         onSubmit={async (event) => {
                             const success = await handleSubmit(event) 
                             if (success) {
-                                nav("/profile")
+                                nav("/Libary/profile")
                             }
                         }}
                         noValidate // not sure what this does

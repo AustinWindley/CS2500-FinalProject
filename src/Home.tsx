@@ -10,7 +10,7 @@ export default function Home() {
         event.preventDefault()
 
         try {
-            fetch("/api/create_database", {
+            fetch("Libary/api/create_database", {
                 method: "POST",
             }) 
             nav("/books")

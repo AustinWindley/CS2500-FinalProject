@@ -17,7 +17,7 @@ import Logout from "./Logout.tsx"
  */
 function App() {
     const router = createBrowserRouter([{
-        path: '/',
+        path: '/Library/',
         children: [
             {index: true, element: <Navigate to={"home"} />},
             {path: "home", element: <Home />},

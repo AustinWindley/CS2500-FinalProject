@@ -29,7 +29,7 @@ export default function AuthorPage() {
 
     // Fetch author info
     useEffect(() => {
-        fetch("api/author/"+authorName, {
+        fetch("Library/api/author/"+authorName, {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -40,7 +40,7 @@ export default function AuthorPage() {
 
     // Fetch author's books
     useEffect(() => {
-        fetch("api/author_books", {
+        fetch("Library/api/author_books", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()

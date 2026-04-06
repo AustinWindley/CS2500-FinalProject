@@ -1,7 +1,7 @@
 {
   "name": "finalproject",
   "version": "1.0.0",
-  "homepage": ".",
+  "homepage": "/Library/",
   "private": true,
   "proxy": "http://127.0.0.1:5001",
   "scripts": {

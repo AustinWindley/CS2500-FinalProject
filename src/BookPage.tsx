@@ -12,7 +12,7 @@ export default function BookPage() {
     const nav = useNavigate()
 
     useEffect(() => {
-        fetch("api/books/"+ISBN, {
+        fetch("Libary/api/books/"+ISBN, {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -22,7 +22,7 @@ export default function BookPage() {
     }, [])
 
     useEffect(() => {
-        fetch("api/author/"+ISBN, {
+        fetch("Libary/api/author/"+ISBN, {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.text()
@@ -32,7 +32,7 @@ export default function BookPage() {
     }, [])
 
     useEffect(() => {
-        fetch("api/ownership_check/"+ISBN, {
+        fetch("Libary/api/ownership_check/"+ISBN, {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -52,10 +52,10 @@ export default function BookPage() {
         event.preventDefault()
 
         try {
-            fetch("/api/checkout/"+bookData.ISBN, {
+            fetch("Libary/api/checkout/"+bookData.ISBN, {
                 method: "POST",
             }) 
-            nav("/profile")
+            nav("/Libary/profile")
         } catch (error) {
             return new Response(null, { status: 500, statusText: "Network error"})
         }
@@ -68,7 +68,7 @@ export default function BookPage() {
             fetch("/api/return/"+bookData.ISBN, {
                 method: "POST",
             }) 
-            nav("/profile")
+            nav("/Libary/profile")
         } catch (error) {
             return new Response(null, { status: 500, statusText: "Network error"})
         }

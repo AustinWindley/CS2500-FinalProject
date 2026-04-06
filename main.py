@@ -20,13 +20,13 @@ app = create_app(Config)
 ### APP ROUTES ###
 
 #create database
-@app.route("/api/create_database", methods=["POST"])
+@app.route("/Library/api/create_database", methods=["POST"])
 def create_database():
     init_db()
     return jsonify(), 200
 
 #user account management
-@app.route("/api/signup", methods=["POST"])
+@app.route("/Library/api/signup", methods=["POST"])
 def create_user():
     """
     Create a new user
@@ -63,7 +63,7 @@ def create_user():
     finally:
         conn.close()
 
-@app.route("/api/login", methods=["POST"])
+@app.route("/Library/api/login", methods=["POST"])
 def login_user():
     """
     login a user
@@ -89,7 +89,7 @@ def login_user():
         return {"id": user["userID"], "username": user["username"]}, 200
     return {"error": "Invalid username or password"}, 401
 
-@app.route("/api/logout", methods=["POST"])
+@app.route("/Library/api/logout", methods=["POST"])
 def logout_user():
     """
     logout a user
@@ -99,7 +99,7 @@ def logout_user():
     return {"message": "Logged out"}
 
 #user info
-@app.route("/api/account", methods=["GET"])
+@app.route("/Library/api/account", methods=["GET"])
 def account():
     """
     api/account gets data from session, then database
@@ -132,7 +132,7 @@ def account():
     return jsonify(error="Not logged in"), 401
 
 #book search
-@app.route("/api/books", methods=["GET"])
+@app.route("/Library/api/books", methods=["GET"])
 def books():
     """
     Get all books
@@ -158,7 +158,7 @@ def books():
         )
     return all_books
 
-@app.route("/api/authors", methods=["GET"])
+@app.route("/Library/api/authors", methods=["GET"])
 def authors():
     """
     Get all authors
@@ -179,7 +179,7 @@ def authors():
         )
     return all_authors
 
-@app.route("/api/book_search", methods=["GET", "POST"])
+@app.route("/Library/api/book_search", methods=["GET", "POST"])
 def book_search():
     """
     Get a searched book
@@ -208,7 +208,7 @@ def book_search():
         )
     return all_books
 
-@app.route("/api/author_search", methods=["GET", "POST"])
+@app.route("/Library/api/author_search", methods=["GET", "POST"])
 def author_search():
     """
     Get a list of books by author
@@ -240,7 +240,7 @@ def author_search():
         )
     return all_books
 
-@app.route("/books/api/books/<string:ISBN>", methods=["GET"])
+@app.route("/Library/books/api/books/<string:ISBN>", methods=["GET"])
 def book_info(ISBN):
     """
     Get all info about a specific book
@@ -266,7 +266,7 @@ def book_info(ISBN):
     )
     return book_return
 
-@app.route("/books/api/author/<string:ISBN>", methods=["GET"])
+@app.route("/Library/books/api/author/<string:ISBN>", methods=["GET"])
 def author_name(ISBN):
     """
     Get name of book author
@@ -287,7 +287,7 @@ def author_name(ISBN):
     )
     return jsonify(author_return), 200
 
-@app.route("/api/author/<string:authorName>", methods=["GET"])
+@app.route("/Library/api/author/<string:authorName>", methods=["GET"])
 def author_info(authorName):
     """
     Get all info about a specific author
@@ -312,7 +312,7 @@ def author_info(authorName):
     return author_return
 
 #check out a book
-@app.route("/api/checkout/<string:ISBN>", methods=["POST"])
+@app.route("/Library/api/checkout/<string:ISBN>", methods=["POST"])
 def checkout(ISBN):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
@@ -326,7 +326,7 @@ def checkout(ISBN):
     return jsonify(), 200
 
 #return a book
-@app.route("/api/return/<string:ISBN>", methods=["POST"])
+@app.route("/Library/api/return/<string:ISBN>", methods=["POST"])
 def return_book(ISBN):
     conn = get_db_connection()
     conn.row_factory = sqlite3.Row
@@ -339,7 +339,7 @@ def return_book(ISBN):
     conn.close()
     return jsonify(), 200
 
-@app.route("/api/user_books", methods=["GET"])
+@app.route("/Library/api/user_books", methods=["GET"])
 def user_books():
     """
     Get all books checked out by user
@@ -370,7 +370,7 @@ def user_books():
         )
     return all_books
 
-@app.route("/books/api/ownership_check/<string:ISBN>", methods=["GET"])
+@app.route("/Library/books/api/ownership_check/<string:ISBN>", methods=["GET"])
 def ownership_check(ISBN):
     """
     Check if book is currently checked out by user

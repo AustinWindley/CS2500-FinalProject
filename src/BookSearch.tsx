@@ -71,7 +71,7 @@ export default function BookSearch() {
             <Header pageName="Book Search"/>
             <Grid container display={"flex"} mt={8}>
                 <Box zIndex={1900}>
-                    <SideBar currentPage="/books"/>
+                    <SideBar currentPage="/Library/books"/>
                 </Box>
                 <Grid 
                     display={"flex"}
@@ -95,7 +95,7 @@ export default function BookSearch() {
                                 <Box 
                                     component="form" 
                                     onSubmit={(event) => {handleSubmit(event)}}
-                                    action={"/api/book_search"}
+                                    action={"/Library/api/book_search"}
                                     display={"flex"}
                                     flexDirection={"row"}
                                     justifyContent={"center"}
@@ -125,7 +125,7 @@ export default function BookSearch() {
                                 height={"100vh"}
                                 mt={0} // move background up to cover search bar
                             >
-                                <CircularProgress size={100} disableShrink/>
+                                <CircularProgress size={100} />
                             </Box>
                         ) : (
                             <Box 

@@ -23,6 +23,7 @@ export default function SideBar(props: Props) {
     const [barChecked, setBarChecked] = useState(false)
     const [openArrowEnter, setOpenArrowEnter] = useState(false)
     const [openVisibility, setOpenVisibility] = useState("flex")
+    const [sideBarVisibility, setSideBarVisibility] = useState(0)
     const nav = useNavigate()
 
     const handleBarOpen = () => {
@@ -80,7 +81,7 @@ export default function SideBar(props: Props) {
             zIndex={3000}
         >
             <Tabs centered orientation="vertical">
-                {props.currentPage === "/books" ? (
+                {props.currentPage === "/Library/books" ? (
                     <>
                         <Tab
                             label={<Typography variant="h5">Search By Author</Typography>}
@@ -90,7 +91,7 @@ export default function SideBar(props: Props) {
                         />
                         <Divider />
                     </>
-                ) : props.currentPage === "/author_books" &&(
+                ) : props.currentPage === "/Library/author_books" &&(
                     <>
                         <Tab
                             label={<Typography variant="h5">Search By Title</Typography>}
@@ -106,13 +107,14 @@ export default function SideBar(props: Props) {
     )
 
     return (
-        <Box display={"flex"} position={"fixed"}>
+        <>
             <Slide in={barChecked} direction="right" timeout={400} appear={true}>
                 <Grid 
                     display={"flex"} 
                     justifyContent={"start"} 
                     flexDirection={"row"}
-                    size={12}
+                    //size={4}
+                    position={"fixed"}
                 >
                     <Grid position={"fixed"}>
                         {sideBar}
@@ -131,7 +133,7 @@ export default function SideBar(props: Props) {
                     </IconButton>
                 </Box>
             </Slide>
-        </Box>
+        </>
     )
 
 }

@@ -5,14 +5,15 @@ import Header from "./statics/Header.tsx"
 
 export default function BookPage() {
     const location = useLocation()
-    const ISBN = location["pathname"].split("/").slice(2)
+    const ISBN = location["pathname"].split("/").slice(3)
     const [bookData, setBookData] = useState([])
     const [authorName, setAuthorName] = useState("")
     const [ownership, setOwnership] = useState("")
     const nav = useNavigate()
 
     useEffect(() => {
-        fetch("Libary/api/books/"+ISBN, {
+        console.log(ISBN),
+        fetch("/Library/books/api/books/"+ISBN, {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -22,7 +23,7 @@ export default function BookPage() {
     }, [])
 
     useEffect(() => {
-        fetch("Libary/api/author/"+ISBN, {
+        fetch("/Library/books/api/author/"+ISBN, {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.text()
@@ -32,7 +33,7 @@ export default function BookPage() {
     }, [])
 
     useEffect(() => {
-        fetch("Libary/api/ownership_check/"+ISBN, {
+        fetch("/Library/books/api/ownership_check/"+ISBN, {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -52,10 +53,10 @@ export default function BookPage() {
         event.preventDefault()
 
         try {
-            fetch("Libary/api/checkout/"+bookData.ISBN, {
+            fetch("/Library/api/checkout/"+bookData.ISBN, {
                 method: "POST",
             }) 
-            nav("/Libary/profile")
+            nav("/Library/profile")
         } catch (error) {
             return new Response(null, { status: 500, statusText: "Network error"})
         }
@@ -65,10 +66,10 @@ export default function BookPage() {
         event.preventDefault()
 
         try {
-            fetch("/api/return/"+bookData.ISBN, {
+            fetch("/Library/api/return/"+bookData.ISBN, {
                 method: "POST",
             }) 
-            nav("/Libary/profile")
+            nav("/Library/profile")
         } catch (error) {
             return new Response(null, { status: 500, statusText: "Network error"})
         }

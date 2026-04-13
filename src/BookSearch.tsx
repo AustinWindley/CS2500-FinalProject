@@ -17,7 +17,7 @@ export default function BookSearch() {
 
     // Load list of all books for autocomplete
     useEffect(() => {
-        fetch("Libary/api/books", {
+        fetch("/Library/api/books", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -28,7 +28,7 @@ export default function BookSearch() {
 
     async function sendFormData(formData: FormData) {
         try {
-            const response = await fetch("Libary/api/book_search", {
+            const response = await fetch("/Library/api/book_search", {
                 method: "POST",
                 body: formData
             })

@@ -53,7 +53,7 @@ export default function SideBar(props: Props) {
     }
 
     useEffect(() => {
-        fetch("/api/account", {
+        fetch("/Library/api/account", {
             headers: { "Accept": "application/json" }
         }).then(
             res => {
@@ -86,7 +86,7 @@ export default function SideBar(props: Props) {
                             label={<Typography variant="h5">Search By Author</Typography>}
                             //value={"/author_books"}
                             sx={{textTransform: "none"}}
-                            onClick={() => {setPage("/author_books"); nav("/author_books")}}
+                            onClick={() => {setPage("/Library/author_books"); nav("/Library/author_books")}}
                         />
                         <Divider />
                     </>
@@ -96,7 +96,7 @@ export default function SideBar(props: Props) {
                             label={<Typography variant="h5">Search By Title</Typography>}
                             //value={"/books"}
                             sx={{textTransform: "none"}}
-                            onClick={() => {setPage("/books"); nav("/books")}}
+                            onClick={() => {setPage("/Library/books"); nav("/Library/books")}}
                         />
                         <Divider />
                     </>

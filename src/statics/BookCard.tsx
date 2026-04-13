@@ -21,7 +21,7 @@ export default function BookCard(props: Props) {
                     <CardActionArea 
                         onMouseOver={() => setPaperElevation(10)} 
                         onMouseOut={() => setPaperElevation(5)}
-                        onClick={() => nav("/books/" + props.ISBN)}
+                        onClick={() => nav("/Library/books/" + props.ISBN)}
                     >
                         <CardContent sx={{display: "flex", flexDirection:"row", justifyContent:"space-around"}}>
                             <CardMedia 

@@ -23,7 +23,7 @@ export default function Header(props: Props) {
 
 
     useEffect(() => {
-        fetch("/api/account", {
+        fetch("/Library/api/account", {
             headers: {"Accept": "application/json"}
         }).then(
             res => {
@@ -67,13 +67,13 @@ export default function Header(props: Props) {
                     label={<Typography variant="h5">Home</Typography>}
                     //value={"/home"}
                     sx={{textTransform: "none"}}
-                    onClick={() => {nav("/home")}}
+                    onClick={() => {nav("/Library/home")}}
                 />
                 <Tab
                     label={<Typography variant="h5">Book Search</Typography>}
                     //value={"/books"}
                     sx={{textTransform: "none"}}
-                    onClick={() => {nav("/books")}}
+                    onClick={() => {nav("/Library/books")}}
                 />
             </Tabs>
         </Grid>
@@ -96,13 +96,13 @@ export default function Header(props: Props) {
                         label={<Typography variant="h5">Profile</Typography>}
                         //value={"/profile"}
                         sx={{textTransform: "none"}}
-                        onClick={() => {nav("/profile")}}
+                        onClick={() => {nav("/Library/profile")}}
                     />
                     <Tab
                         label={<Typography variant="h5">Logout</Typography>}
                         //value={"/logout"}
                         sx={{textTransform: "none"}}
-                        onClick={() => {nav("/logout")}}
+                        onClick={() => {nav("/Library/logout")}}
                     />
                 </> 
                 ) : (
@@ -111,13 +111,13 @@ export default function Header(props: Props) {
                         label={<Typography variant="h5">Login</Typography>}
                         //value={"/login"}
                         sx={{textTransform: "none"}}
-                        onClick={() => {nav("/login")}}
+                        onClick={() => {nav("/Library/login")}}
                     />
                     <Tab
                         label={<Typography variant="h5">Signup</Typography>}
                         //value={"/signup"}
                         sx={{textTransform: "none"}}
-                        onClick={() => {nav("/signup")}}
+                        onClick={() => {nav("/Library/signup")}}
                     />
                 </>
                 )}

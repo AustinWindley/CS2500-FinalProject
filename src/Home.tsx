@@ -10,10 +10,10 @@ export default function Home() {
         event.preventDefault()
 
         try {
-            fetch("Libary/api/create_database", {
+            fetch("/Library/api/create_database", {
                 method: "POST",
             }) 
-            nav("Library/books")
+            nav("/Library/books")
         } catch (error) {
             return new Response(null, { status: 500, statusText: "Network error"})
         }
@@ -28,7 +28,7 @@ export default function Home() {
                 alignItems={"center"}
                 width={"100vw"}
                 height={"100vh"}
-                sx={{backgroundImage: `url('Library/assets/library.jpg')`, backgroundSize: "cover"}}
+                sx={{backgroundImage: `url('./assets/library.jpg')`, backgroundSize: "cover"}}
             >
                 <Paper elevation={10} sx={{borderRadius: 3}}>
                     <Box display={"flex"} flexDirection={"column"} padding={4} borderRadius={3}>

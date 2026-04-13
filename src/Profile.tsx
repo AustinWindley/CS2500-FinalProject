@@ -27,7 +27,7 @@ export default function Profile() {
 
     // Fetch user account data 
     useEffect(() => {
-        fetch("Libary/api/account", {
+        fetch("/Library/api/account", {
             method: "GET",
             headers: {"Accept": "application/json"},
             credentials: "include"
@@ -37,7 +37,7 @@ export default function Profile() {
         return res.json()
         })
         .then((data) => {
-        console.log("Data from Libary/api/account:", data)
+        console.log("Data from /Library/api/account:", data)
         // Set fetched data to state
         setUserData(data)
         })
@@ -48,7 +48,7 @@ export default function Profile() {
 
     // Fetch user's checked out books
     useEffect(() => {
-        fetch("Libary/api/user_books", {
+        fetch("/Library/api/user_books", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()

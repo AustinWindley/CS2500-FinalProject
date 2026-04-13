@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom"
  */
 async function sendFormData(formData: FormData): Promise<Response> {
     try {
-        const response = await fetch("Libary/api/signup", {
+        const response = await fetch("/Library/api/signup", {
             method: "POST",
             body: formData
         })
@@ -76,11 +76,11 @@ export default function Signup() {
                         </Typography>
                         <Box 
                             component="form" 
-                            action={"/api/users"}
+                            action={"/Library/api/users"}
                             onSubmit={async (event) => {
                                 const success = await handleSubmit(event) 
                                 if (success) { 
-                                    nav("/Libary/profile")
+                                    nav("/Library/profile")
                                 }
                             }} 
                             noValidate // not sure what this does

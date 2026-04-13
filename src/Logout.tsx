@@ -11,7 +11,7 @@ export default function Logout() {
     const nav = useNavigate()
 
     const handleLogout = () => {
-        fetch("Libary/api/logout", { method: "POST" })
+        fetch("/Library/api/logout", { method: "POST" })
         .then(() => {nav("/Libary/login")})
         .catch((err) => console.error("Logout error:", err))
     }
@@ -23,7 +23,7 @@ export default function Logout() {
                 return false
             }
 
-            const response = await fetch("Libary/api/delete_user", { 
+            const response = await fetch("/Library/api/delete_user", { 
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 credentials: "include"
@@ -71,7 +71,7 @@ export default function Logout() {
                         onClick={async () => {
                             const success = await handleDeleteAccount()
                             if (success) {
-                                nav("/Libary/signup")
+                                nav("/Library/signup")
                             }
                         }}
                     >

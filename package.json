@@ -1,8 +1,8 @@
 {
   "name": "finalproject",
   "version": "1.0.0",
-  "homepage": "/Library/",
   "private": true,
+  "homepage": "/Library/",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

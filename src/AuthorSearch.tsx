@@ -17,7 +17,7 @@ export default function AuthorSearch() {
 
     // Load list of all books for autocomplete
     useEffect(() => {
-        fetch("Libary/api/authors", {
+        fetch("Library/api/authors", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -28,7 +28,7 @@ export default function AuthorSearch() {
 
     async function sendFormData(formData: FormData) {
         try {
-            const response = await fetch("/api/author_search", {
+            const response = await fetch("Library/api/author_search", {
                 method: "POST",
                 body: formData
             })

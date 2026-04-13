@@ -25,7 +25,7 @@ export default function BookCard(props: Props) {
                     >
                         <CardContent sx={{display: "flex", flexDirection:"row", justifyContent:"space-around"}}>
                             <CardMedia 
-                                style={{height: 150, width: 150, borderRadius: 4}}
+                                style={{height: 150, width: 150, borderRadius: 4, marginRight: 15}}
                                 component={"img"}
                                 src={props.imageURL} 
                             />
@@ -40,7 +40,6 @@ export default function BookCard(props: Props) {
                         </CardContent>
                     </CardActionArea>
                 </Card>
-            
             </Paper>
         </Box>
         

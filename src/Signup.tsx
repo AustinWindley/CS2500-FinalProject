@@ -1,4 +1,4 @@
-//import Header from "./statics/Header.tsx"
+import Header from "./statics/Header.tsx"
 import { Fragment } from "react/jsx-runtime"
 import { Grid, Typography, Container, Paper, Avatar, Box, TextField, Button } from "@mui/material"
 import { useNavigate } from "react-router-dom"
@@ -59,7 +59,7 @@ export default function Signup() {
     const nav = useNavigate()
     return(
         <Fragment>
-            {/* <Header pageName="Signup"></Header> */}
+            <Header pageName="Signup"/>
             <Grid container mt={8}>
                 <Container maxWidth="xs">
                     <Paper elevation={10} sx={{ padding: 3, marginTop: 10 }}>

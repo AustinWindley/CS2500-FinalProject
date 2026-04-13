@@ -23,7 +23,7 @@ interface UserData {
  */
 export default function AuthorPage() {
     const [data, setData] = useState([])
-    const authorName = location["pathname"].split("/").slice(2)
+    const authorName = location["pathname"].split("/").slice(3)
     const [booksData, setBooksData] = useState([])
     const nav = useNavigate()
 

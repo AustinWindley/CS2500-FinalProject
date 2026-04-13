@@ -17,7 +17,7 @@ export default function AuthorSearch() {
 
     // Load list of all books for autocomplete
     useEffect(() => {
-        fetch("Library/api/authors", {
+        fetch("/Library/api/authors", {
             headers: {"Accept": "application/json"}
         }).then(
             res => res.json()
@@ -28,7 +28,7 @@ export default function AuthorSearch() {
 
     async function sendFormData(formData: FormData) {
         try {
-            const response = await fetch("Library/api/author_search", {
+            const response = await fetch("/Library/api/author_search", {
                 method: "POST",
                 body: formData
             })
@@ -71,7 +71,7 @@ export default function AuthorSearch() {
             <Header pageName="Book Search"/>
             <Grid container display={"flex"} mt={8}>
                 <Box zIndex={1900}>
-                    <SideBar currentPage="/author_books"/>
+                    <SideBar currentPage="/Library/author_books"/>
                 </Box>
                 <Grid 
                     display={"flex"}
@@ -87,7 +87,7 @@ export default function AuthorSearch() {
                             <Box 
                                 component="form" 
                                 onSubmit={(event) => {handleSubmit(event)}}
-                                action={"/api/author_search"}
+                                action={"/Library/api/author_search"}
                                 display={"flex"}
                                 flexDirection={"row"}
                                 justifyContent={"center"}
@@ -99,7 +99,7 @@ export default function AuthorSearch() {
                                     id="book-search"
                                     freeSolo
                                     options={allAuthors.map((option) => option["authorName"])}
-                                    renderInput={(params) => <TextField {...params} name="authorName">Search for a Book...</TextField> }
+                                    renderInput={(params) => <TextField {...params} name="authorName">Search for a Book via Author...</TextField> }
                                     sx={{width: "80vw"}}
                                 />
                                 <Button type="submit">

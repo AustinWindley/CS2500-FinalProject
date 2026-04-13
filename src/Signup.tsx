@@ -60,7 +60,7 @@ export default function Signup() {
     return(
         <Fragment>
             <Header pageName="Signup"/>
-            <Grid container mt={8}>
+            <Grid container mt={4} mb={4}>
                 <Container maxWidth="xs">
                     <Paper elevation={10} sx={{ padding: 3, marginTop: 10 }}>
                         <Avatar sx={{

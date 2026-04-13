@@ -12,7 +12,7 @@ export default function Logout() {
 
     const handleLogout = () => {
         fetch("/Library/api/logout", { method: "POST" })
-        .then(() => {nav("/Libary/login")})
+        .then(() => {nav("/Library/login")})
         .catch((err) => console.error("Logout error:", err))
     }
 
